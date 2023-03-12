@@ -1,0 +1,3 @@
+1. Display has to work, clear the window everytime
+2. User input must accept: number of tasks, all the tasks name, start month, end month, dependencies. At the end ask if they want to update
+3. Detect circular dependencies
