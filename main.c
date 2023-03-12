@@ -9,17 +9,17 @@ int main(void) {
 
 
     for(int i = 0;i<numTasks;i++){
-      for(int k = 0;k<13;k++){
-          printf("----------|");
-      }
-      printf("\n");
-      for(int j = 0;j<13;j++){
-          printf("xxxxxxxxxx|");
-      }
-      printf("\n");
+        for(int k = 0;k<13;k++){
+            printf("----------|");
+        }
+        printf("\n");
+        for(int j = 0;j<13;j++){+
+            printf("xxxxxxxxxx|");
+        }
+        printf("\n");
     }
     for(int i = 0;i<13;i++){
-      printf("----------|");
+        printf("----------|");
     }
     return 0;
 }
