@@ -9,6 +9,8 @@ typedef struct task
 } Task;
 
 Task SetupTask(int numTasks);
+void PrintGantt(Task tasksArray[], int numTasks);
+
 
 int main(void) {
     int numTasks;
@@ -23,22 +25,40 @@ int main(void) {
       printf("New task added: %s\n", tasksArray[i].name);
     }
 
-    printf("          |January   |February  |March     |April     |May       |June      |July      |August    |September |October   |November  |December  |\n");
+    PrintGantt(tasksArray, numTasks);
+
+    return 0;
+}
+void PrintGantt(Task tasksArray[], int numTasks)
+{
+    printf("          |January   |February  |March     |April     |May       |June      |July      |August    |September |October   |November  |December  |Dep       |\n");
 
     for(int i = 0;i<numTasks;i++){
-        for(int k = 0;k<13;k++){
+        for(int k = 0;k<14;k++){
             printf("----------|");
         }
         printf("\n");
-        for(int j = 0;j<13;j++){+
-            printf("xxxxxxxxxx|");
+
+        printf("%-10s|", tasksArray[i].name);
+
+        for(int j = 1;j<=12;j++){
+            if (j >= tasksArray[i].startMonth && j <= tasksArray[i].endMonth) {
+                printf("   XXX    |");
+            } else{
+                printf("          |");
+            }
         }
+        for(int n = 0;n<tasksArray[i].dependenciesCount;n++){
+          printf("%d ",tasksArray[i].dependencies[n]);
+        }
+
         printf("\n");
     }
-    for(int i = 0;i<13;i++){
+
+    for(int i = 0;i<14;i++){
         printf("----------|");
     }
-    return 0;
+    printf("\n");
 }
 
 Task SetupTask(int numTasks)
@@ -47,6 +67,7 @@ Task SetupTask(int numTasks)
   Task newTask;
 
   newTask.name = (char*)malloc(sizeof(char));
+
   printf("Please enter the task name:\n");
   scanf("%s", newTask.name);
 
@@ -71,20 +92,23 @@ Task SetupTask(int numTasks)
   printf("Enter how many dependencies this task has:\n");
   scanf("%d", &newTask.dependenciesCount);
 
-  int dependencies[newTask.dependenciesCount];
-  for (int i = 0; i < newTask.dependenciesCount; i++)
-  {
-    printf("Enter dependent task (0 - %d):\n", numTasks - 1);
-    scanf("%d", &dependencies[i]);
 
-    while (dependencies[i] < 0 || dependencies[i] >= numTasks)
+  if (newTask.dependenciesCount > 0)
+  {
+    newTask.dependencies = (int*) malloc(sizeof(int));
+
+    for (int i = 0; i < newTask.dependenciesCount; i++)
     {
-      printf("Invalid number entered. Please enter a number between 0 - %d:\n", numTasks - 1);
-      scanf("%d", &dependencies[i]);
+      printf("Enter dependent task (0 - %d):\n", numTasks - 1);
+      scanf("%d", &newTask.dependencies[i]);
+
+      while (newTask.dependencies[i] < 0 || newTask.dependencies[i] >= numTasks)
+      {
+        printf("Invalid number entered. Please enter a number between 0 - %d:\n", numTasks - 1);
+        scanf("%d", &newTask.dependencies[i]);
+      }
     }
   }
-
-  newTask.dependencies = dependencies;
 
   return newTask;
 
