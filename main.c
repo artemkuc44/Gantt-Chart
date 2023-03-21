@@ -208,7 +208,7 @@ Task SetupTask(int numTasks)
 
       printf("Start month (1-12):\n");
       scanf("%d", &newTask.startMonth);
-      
+
       while (newTask.startMonth < 1 || newTask.startMonth > 12)
       {
             printf("Invalid month entered. Please enter a number between 1 - 12:\n");
